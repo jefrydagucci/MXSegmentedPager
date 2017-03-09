@@ -124,7 +124,7 @@
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
     }
-
+    
     frame.size.width -= self.segmentedControlEdgeInsets.left;
     frame.size.width -= self.segmentedControlEdgeInsets.right;
     frame.size.height = _controlHeight;
@@ -133,22 +133,24 @@
 }
 
 - (void)layoutPager {
-    CGRect frame = self.bounds;
-    
-    frame.origin = CGPointZero;
-    
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        frame.origin.y  = _controlHeight;
-        frame.origin.y += self.segmentedControlEdgeInsets.top;
-        frame.origin.y += self.segmentedControlEdgeInsets.bottom;
-    }
-    
-    frame.size.height -= _controlHeight;
-    frame.size.height -= self.segmentedControlEdgeInsets.top;
-    frame.size.height -= self.segmentedControlEdgeInsets.bottom;
-    frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
-    
-    self.pager.frame = frame;
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = self.bounds;
+        
+        frame.origin = CGPointZero;
+        
+        if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+            frame.origin.y  = _controlHeight;
+            frame.origin.y += self.segmentedControlEdgeInsets.top;
+            frame.origin.y += self.segmentedControlEdgeInsets.bottom;
+        }
+        
+        frame.size.height -= _controlHeight;
+        frame.size.height -= self.segmentedControlEdgeInsets.top;
+        frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+        frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
+        
+        self.pager.frame = frame;
+    }];
 }
 
 #pragma mark Properties
@@ -270,7 +272,7 @@
     
     NSString* title = self.segmentedControl.sectionTitles[index];
     UIView* view = self.pager.selectedPage;
-                    
+    
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
         [self.delegate segmentedPager:self didSelectViewWithTitle:title];
     }
